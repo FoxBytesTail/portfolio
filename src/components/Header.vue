@@ -2,8 +2,8 @@
     <div class="hello">
         <el-container>
             <el-header class="header">
-                <el-row type="flex" class="row-bg" justify="start">
-                    <el-col :span="4" :offset="6" >
+                <el-row type="flex" class="row-bg " justify="start" :gutter="10">
+                    <el-col :span="4" :offset="6" :xs="2" :sm="3" :md="4" :lg="4" :xl="4">
                         <div class="grid-content bg-trans">
                             <a href="/">
                             <img src="../assets/logo.png" id="logo">
@@ -12,17 +12,26 @@
                             </a>
                         </div>
                     </el-col>
-                    <el-col :span="11">
-                        <div class="grid-content bg-trans">
-                            <el-container>
-                                <el-menu :default-active="activeIndex" class="menu" mode="horizontal" @select="handleSelect" background-color="#fff0" text-color="#fff" active-text-color="#fff">
-                                    <el-menu-item index="1">Home</el-menu-item>
-                                    <el-menu-item index="2">Experience</el-menu-item>
-                                    <el-menu-item index="3">Portfolio</el-menu-item>
-                                    <el-menu-item index="4">Contact</el-menu-item>
-                                </el-menu>
-                            </el-container>
-                        </div>
+                    <el-col :span="8">
+                        <span class="grid-content bg-trans">
+                          <el-menu :default-active="activeIndex" class="menu el-fade-in-linear" mode="horizontal" @select="handleSelect" background-color="#fff0" text-color="#fff" active-text-color="#fff">
+                            <el-menu-item index="1" class="hide-bar">Home</el-menu-item>
+                            <el-menu-item index="2" class="hide-bar">Experience</el-menu-item>
+                            <el-menu-item index="3" class="hide-bar">Contact</el-menu-item>
+                            <el-menu-item index="4" class="hide-button">
+                              <el-dropdown @command="handleCommand">
+                                <span class="el-dropdown-link">
+                                  Menu<i class="el-icon-arrow-down el-icon--right"></i>
+                                </span>
+                                <el-dropdown-menu slot="dropdown">
+                                  <el-dropdown-item command="1">Home</el-dropdown-item>
+                                  <el-dropdown-item command="2">Experience</el-dropdown-item>
+                                  <el-dropdown-item command="3">Contact</el-dropdown-item>
+                                </el-dropdown-menu>
+                              </el-dropdown>
+                            </el-menu-item>
+                          </el-menu>
+                        </span>
                     </el-col>
                     <!-- <el-col :span="7">
                         <div class="grid-content bg-trans"></div>
@@ -40,23 +49,35 @@
                         <div>
                             <el-row type="flex" class="row-bg" justify="start" style="text-align:left">
                                 <el-col :span="8" :offset="6" id="greeting-text">
-                                    <h2 style="margin-bottom: 0">Hi there, my name is Youngmin!</h2>
+                                    <h2 style="margin-bottom: 0; padding-top: 30px;">Hi there, my name is Youngmin!</h2>
                                 </el-col>
                             </el-row>
-                            <el-row type="flex" class="row-bg" justify="start" style="text-align:left">
+                            <el-row type="flex" class="row-bg" justify="start" style="text-align:left;">
                                 <el-col :span="8" :offset="6" id="greeting-text">
-                                    <p style="font-size:20px">Let's work together on <transition name="slide-fade" mode="out-in"> <span :key="something">{{ something }}</span></transition></p>
+                                    <p style="font-size:20px; padding-bottom: 40px;">Let's work together to <transition name="slide-fade" mode="out-in"> <span :key="something">{{ something }}</span></transition></p>
+                                </el-col>
+                            </el-row>
+                            <el-row type="flex" class="row-bg" justify="start" style="text-align:center">
+                                <el-col :span="12" :offset="6" id="resume">
+                                    <div id="bio" >
+                                        <p style="padding-left:25px; padding-right:25px; text-align:start;"> Youngmin Lee is a full-stack engineer in the greater Seattle area. He is experienced in several modern web frameworks (Node.js, Vue, Laravel...), programming languages, graphics design / mockup software, and is currently seeking a job in the information technology industry.</p>
+                                        <el-button type="success">Download resume</el-button>
+                                    </div>
                                 </el-col>
                             </el-row>
                         </div>
                     </div>>
-                </div>
+                  </div>
+                <div id="twitch-embed"></div>
             </el-main>
         </el-container>
     </div>
 </template>
 
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
 <script>
+import $ from "jquery"
 export default {
   name: "Header",
   props: {
@@ -64,20 +85,40 @@ export default {
   },
   mounted: function() {
     let that = this;
+    let index = 0;
     setInterval(function() {
-      let things = ["something", "somepony"]
-      that.something = things[Math.floor(Math.random() * things.length)]
-    }, 1111);
+      let words = ["empower...", "transform...", "build...", "design...", "innovate..."]
+      that.something = words[index % words.length]
+      index += 1;
+    }, 4000);
+    this.loadJs("https://embed.twitch.tv/embed/v1.js", function() {
+        new Twitch.Embed("twitch-embed", {
+        width: 854,
+        height: 480,
+        channel: "monstercat"
+      });
+    })
   },
   components: {},
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
+    },
+    handleCommand(command) {
+        this.$message('click on item ' + command);
+    },
+    loadJs(url, callback) {
+      $.ajax({
+        url: url,
+        dataType: 'script',
+        success:callback,
+        async:true
+      });
     }
   },
   data: function() {
     return {
-      something: "somepony",
+      something: "innovate...",
       activeIndex: "1",
       activeIndex2: "1"
     };
@@ -146,11 +187,12 @@ h2 {
 }
 
 .el-menu {
-  padding-left: 30px;
+  /* padding-left: 30px; */
   margin-top: 0px;
   border: none;
   font-family: "DISKOPIA2.0 Black";
   font-size: 1.5rem;
+  text-align: right;
 }
 
 .el-menu-item {
@@ -176,6 +218,15 @@ h2 {
   min-height: 60px;
 }
 
+.el-dropdown-link {
+    cursor: pointer;
+    color: #fff;
+  }
+
+.el-icon-arrow-down {
+    font-size: 12px;
+  }
+
 .menu {
   margin: auto auto;
 }
@@ -183,6 +234,7 @@ h2 {
 #logo {
   width: 125px;
   float: left;
+  margin-left: -7px;
 }
 
 #logoText {
@@ -196,6 +248,14 @@ h2 {
   padding-right: 10px;
 }
 
+#bio {
+    border-radius: 5px;
+    background: linear-gradient(to bottom right, #7e57c2a3, transparent);
+    border: double #4527a0 1px;
+    box-shadow: 1px 1px #1e4d74, 3px 3px #1e4d74ad, 5px 5px #1e4d7454, 7px 5px #1e4d7400;
+    padding-bottom: 15px;
+}
+
 .main-cnt {
   margin-top: -80px;
   padding: 80px 0 120px;
@@ -206,7 +266,7 @@ h2 {
 
 .banner {
   position: relative;
-  height: 420px;
+  height: 500px;
   color: #fff;
   margin-bottom: 130px;
   width: 100%;
@@ -253,13 +313,64 @@ h2 {
   animation: blink 0.4s infinite alternate;
 }
 
+@media only screen and (min-width: 1229px ) {
+  .menu {
+    float: right;
+  }
+  .hide-button {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 1229px ) {
+  .menu {
+    float: right;
+  }
+  .hide-bar {
+    display:none;
+
+  }
+  .el-dropdown-link {
+    font-size: 1rem;
+  }
+}
+
 /* @media(max-width:1140px) .banner img {
         right: 0;
     } */
 
-@media (max-width: 50em) {
-  img {
+@media (max-width: 1450px) {
+  #logo { display: none;}
+  #logoText {
+    padding-left: 0;
+  }
+  h2 {font-size: 40px;}
+}
+
+@media (max-width: 926px) {
+  #logo {
     display: none;
+  }
+  h2 {
+      font-size:30px;
+  }
+}
+
+@media (max-width: 747px) {
+  .banner {
+    height: 600px;
+  }
+}
+
+@media (max-width: 600px) {
+  #logoText {
+    display:none;
+  }
+}
+
+@media (max-width: 480px) {
+  .banner {
+    height: 800px;
   }
 }
 
