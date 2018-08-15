@@ -63,7 +63,7 @@
                   <div id="bio">
                     <read-more more-str="read more" :text="bio" link="#" less-str="read less" :max-chars="123" style="padding-left:25px; padding-right:25px; text-align:start;"></read-more>
                     <!-- <p style="padding-left:25px; padding-right:25px; text-align:start;">Youngmin Lee is a software engineer seeking a technical internship to complete his Capstone at the University of Washington. He is self-motivated and has experience in engineering emerging technologies as well as line of business solutions. Some qualities of his are problem solving, leadership, and communication.</p> -->
-                    <a href="youngmin_lee_resume.pdf" download>
+                    <a href="https://github.com/FoxBytesTail/portfolio/raw/master/public/youngmin_lee_resume.pdf" download>
                       <el-button type="success">Download resume</el-button>
                     </a>
                   </div>
