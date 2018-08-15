@@ -3,7 +3,7 @@
     <el-container>
       <el-header class="header">
         <el-row type="flex" class="row-bg " justify="start" :gutter="10">
-          <el-col :span="4" :offset="6" :xs="2" :sm="3" :md="4" :lg="4" :xl="4">
+          <el-col :span="4" :offset="6" :xs="3" :sm="4" :md="4" :lg="4" :xl="4">
             <div class="grid-content bg-trans">
               <a href="/">
                 <img src="../assets/logo.png" id="logo">
@@ -16,9 +16,9 @@
             <span class="grid-content bg-trans">
               <el-menu :default-active="activeIndex" :router="true" class="menu el-fade-in-linear" mode="horizontal" background-color="#fff0" text-color="#fff" active-text-color="#fff">
                 <el-menu-item index="1" :route="{ path: '/' }" class="hide-bar">Home</el-menu-item>
-                <el-menu-item index="2" :route="{ path: '/experience' }" class="hide-bar">Experience</el-menu-item>
-                <el-menu-item index="3" :route="{ path: '/contact' }" class="hide-bar">Contact</el-menu-item>
-                <el-menu-item index="4" class="hide-button">
+                <!-- <el-menu-item index="2" :route="{ path: '/experience' }" class="hide-bar">Experience</el-menu-item> -->
+                <el-menu-item index="2" :route="{ path: '/contact' }" class="hide-bar">Contact</el-menu-item>
+                <el-menu-item index="3" class="hide-button">
                   <el-dropdown @command="handleCommand">
                     <span class="el-dropdown-link">
                       Menu
@@ -26,8 +26,8 @@
                     </span>
                     <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item command="1">Home</el-dropdown-item>
-                      <el-dropdown-item command="2">Experience</el-dropdown-item>
-                      <el-dropdown-item command="3">Contact</el-dropdown-item>
+                      <!-- <el-dropdown-item command="2">Experience</el-dropdown-item> -->
+                      <el-dropdown-item command="2">Contact</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </el-menu-item>
@@ -51,9 +51,9 @@
               </el-row>
               <el-row type="flex" class="row-bg" justify="start" style="text-align:left;">
                 <el-col :span="12" :offset="6" id="greeting-text">
-                  <p style="font-size:20px; padding-bottom: 40px;">Let's work together to
+                  <p style="font-size:20px; padding-bottom: 40px;">Let's work together to..
                     <transition name="slide-fade" mode="out-in">
-                      <span :key="something">{{ something }}</span>
+                      <span :key="words">{{ words }}</span>
                     </transition>
                   </p>
                 </el-col>
@@ -61,8 +61,9 @@
               <el-row type="flex" class="row-bg" justify="start" style="text-align:center">
                 <el-col :span="12" :offset="6" id="resume">
                   <div id="bio">
-                    <p style="padding-left:25px; padding-right:25px; text-align:start;">Youngmin Lee is a full-stack engineer in the greater Seattle area. He is experienced in several modern web frameworks (Node.js, Vue, Laravel...), programming languages, graphics design / mockup software, and is currently seeking a job in the information technology industry.</p>
-                    <a href="/youngmin_lee_resume.pdf" download>
+                    <read-more more-str="read more" :text="bio" link="#" less-str="read less" :max-chars="123" style="padding-left:25px; padding-right:25px; text-align:start;"></read-more>
+                    <!-- <p style="padding-left:25px; padding-right:25px; text-align:start;">Youngmin Lee is a software engineer seeking a technical internship to complete his Capstone at the University of Washington. He is self-motivated and has experience in engineering emerging technologies as well as line of business solutions. Some qualities of his are problem solving, leadership, and communication.</p> -->
+                    <a href="youngmin_lee_resume.pdf" download>
                       <el-button type="success">Download resume</el-button>
                     </a>
                   </div>
@@ -97,31 +98,32 @@ export default {
     let index = 0;
     setInterval(function() {
       let words = [
-        "empower...",
-        "transform...",
-        "build...",
-        "design...",
-        "innovate..."
+        "empower.",
+        "transform.",
+        "build.",
+        "design.",
+        "innovate."
       ];
-      that.something = words[index % words.length];
+      that.words = words[index % words.length];
       index += 1;
-    }, 4000);
+    }, 3500);
   },
   components: {
     GithubRepoCards
   },
   methods: {
     handleCommand(command) {
-      console.log(command);
+      // console.log(command);
       switch (command) {
         case "1":
           this.$router.push("/");
           break;
+        // case "2":
+        //   this.$router.push("/experience");
+        //   break;
         case "2":
-          this.$router.push("/experience");
-          break;
-        case "3":
           this.$router.push("/contact");
+          break;
         default:
           break;
       }
@@ -129,9 +131,10 @@ export default {
   },
   data: function() {
     return {
-      something: "innovate...",
+      words: "innovate.",
       activeIndex: "1",
-      activeIndex2: "1"
+      activeIndex2: "1",
+      bio: "Youngmin Lee is a software engineer seeking a technical internship to complete his Capstone at the University of Washington. He has experience with engineering emerging technologies as well as line of business solutions through knowledge of modern web frameworks, programming languages, mock-up software, and graphics design. Some key qualities of his are problem solving, leadership, and communication."
     };
   }
 };
@@ -148,11 +151,12 @@ body {
   font-family: sans-serif;
 }
 
-
 .header-font {
   font-family: "DISKOPIA2.0 Black";
   color: #fff;
-  font-size: 3rem;
+  font-size: 2.8rem;
+  margin: 15px 0px;
+  margin-top: -40px;
 }
 
 .slide-fade-enter-active {
@@ -165,6 +169,21 @@ body {
 .slide-fade-leave-to {
   transform: translateX(10px);
   opacity: 0;
+}
+
+#readmore {
+  color: white;
+  font-size: 0.75em;
+  display: block;
+  padding: 0.5em;
+  cursor: pointer;
+  text-align: center;
+  transition-duration: 0.1s;
+  transition-timing-function: linear;
+  border: solid 1px white;
+  border-radius: 1.1em / 50%;
+  width: 65px;
+  text-decoration: none;
 }
 
 main {
@@ -276,7 +295,7 @@ h2 {
 
 .banner {
   position: relative;
-  height: 500px;
+  height: 400px;
   color: #fff;
   margin-bottom: 130px;
   width: 100%;
@@ -371,7 +390,7 @@ h2 {
 
 @media (max-width: 747px) {
   .banner {
-    height: 600px;
+    height: 500px;
   }
 }
 
@@ -383,7 +402,7 @@ h2 {
 
 @media (max-width: 480px) {
   .banner {
-    height: 800px;
+    height: 550px;
   }
 }
 

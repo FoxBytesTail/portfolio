@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="header-font">Past projects on Github</h1>
+    <h1 class="header-font">Projects on Github</h1>
     <div v-for="repo in repos" v-bind:key="repo.id">
       <el-card style="background: rgba(255, 255, 255, .4)">
         <div style="padding: 14px;">
@@ -36,7 +36,9 @@ export default {
         })
         .then(function(d) {
           t.repos = d;
-          t.repos.sort((a, b) => a.updated_at - b.updated_at);
+          t.repos.sort(
+            (a, b) => a.updated_at - b.updated_at
+          );
         })
         .catch(function(e) {
           console.log(e);

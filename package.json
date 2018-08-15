@@ -8,12 +8,20 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "vue": "^2.5.16"
+    "element-ui": "^2.4.5",
+    "hzqing-vue-timeline": "^1.0.3",
+    "jquery": "^3.3.1",
+    "vue": "^2.5.16",
+    "vue-cute-timeline": "^1.2.5",
+    "vue-read-more": "^1.1.1",
+    "vue-router": "^3.0.1",
+    "vuecidity": "^1.0.7"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.0-rc.7",
     "@vue/cli-plugin-eslint": "^3.0.0-rc.7",
     "@vue/cli-service": "^3.0.0-rc.7",
+    "file-loader": "^1.1.11",
     "vue-template-compiler": "^2.5.16"
   },
   "eslintConfig": {

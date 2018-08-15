@@ -5,9 +5,11 @@ import VueRouter from 'vue-router'
 import Experience from './components/Experience.vue'
 import Contact from './components/Contact.vue'
 import GithubRepoCards from './components/GithubRepoCards.vue'
+import ReadMore from 'vue-read-more'
 import App from './App.vue'
 
 Vue.use(VueRouter)
+Vue.use(ReadMore)
 Vue.use(ElementUI)
 
 Vue.component('Element', ElementUI)
